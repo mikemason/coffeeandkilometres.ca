@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Coffee & Kilometres"
+  xmlns="http://www.topografix.com/GPX/1/1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Dempster Highway</name>
+    <desc>Dempster Highway from Dawson City to Inuvik</desc>
+  </metadata>
+  <trk>
+    <name>Dempster Highway Route</name>
+    <trkseg>
+      <!-- Dawson City (Start) -->
+      <trkpt lat="64.0606" lon="-139.4333">
+        <ele>320</ele>
+        <name>Dawson City</name>
+      </trkpt>
+      <!-- Dempster Corner -->
+      <trkpt lat="64.0685" lon="-138.4414">
+        <ele>470</ele>
+        <name>Dempster Corner Junction</name>
+      </trkpt>
+      <!-- Tombstone Park Area -->
+      <trkpt lat="64.4167" lon="-138.3333">
+        <ele>1100</ele>
+        <name>Tombstone Territorial Park</name>
+      </trkpt>
+      <!-- Engineer Creek -->
+      <trkpt lat="65.0167" lon="-138.1000">
+        <ele>720</ele>
+        <name>Engineer Creek</name>
+      </trkpt>
+      <!-- Ogilvie River -->
+      <trkpt lat="65.3667" lon="-138.0000">
+        <ele>580</ele>
+        <name>Ogilvie River</name>
+      </trkpt>
+      <!-- Eagle Plains -->
+      <trkpt lat="66.3667" lon="-136.7167">
+        <ele>670</ele>
+        <name>Eagle Plains</name>
+      </trkpt>
+      <!-- Arctic Circle -->
+      <trkpt lat="66.5600" lon="-136.3500">
+        <ele>540</ele>
+        <name>Arctic Circle Crossing</name>
+      </trkpt>
+      <!-- Fort McPherson -->
+      <trkpt lat="67.4361" lon="-134.8814">
+        <ele>30</ele>
+        <name>Fort McPherson</name>
+      </trkpt>
+      <!-- Inuvik (End) -->
+      <trkpt lat="68.3607" lon="-133.7230">
+        <ele>20</ele>
+        <name>Inuvik</name>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

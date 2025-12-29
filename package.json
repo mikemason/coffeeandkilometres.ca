@@ -1,5 +1,5 @@
 {
-  "name": "temp-project",
+  "name": "coffeeandkilometres",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,6 +9,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.6"
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/rss": "^4.0.14",
+    "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.6",
+    "leaflet": "^1.9.4",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.21"
   }
 }

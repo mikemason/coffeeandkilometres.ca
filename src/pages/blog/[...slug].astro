@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formattedDate = post.data.pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.heroImage}
+  article={true}
+>
+  <article class="max-w-3xl mx-auto px-4 py-12">
+    <!-- Header -->
+    <header class="mb-12">
+      <div class="mb-4">
+        <a
+          href="/blog"
+          class="text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-accent))] transition-colors text-sm"
+        >
+          ← Back to Blog
+        </a>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+        {post.data.title}
+      </h1>
+
+      <div class="flex flex-wrap gap-4 text-sm text-[rgb(var(--color-text-muted))] mb-6">
+        <time datetime={post.data.pubDate.toISOString()}>
+          {formattedDate}
+        </time>
+        {post.data.location && <span>📍 {post.data.location}</span>}
+      </div>
+
+      {post.data.tags.length > 0 && (
+        <div class="flex gap-2 flex-wrap">
+          {post.data.tags.map((tag: string) => (
+            <span class="text-xs px-3 py-1 rounded-full bg-[rgb(var(--color-border))] text-[rgb(var(--color-text-muted))]">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Hero Image -->
+    {post.data.heroImage && (
+      <div class="mb-12 rounded-lg overflow-hidden">
+        <img
+          src={post.data.heroImage}
+          alt={post.data.heroImageAlt || post.data.title}
+          class="w-full aspect-video object-cover"
+        />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none">
+      <Content />
+    </div>
+  </article>
+</Layout>

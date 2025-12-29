@@ -1,0 +1,173 @@
+---
+interface Image {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  images: Image[];
+  columns?: number;
+}
+
+const { images, columns = 3 } = Astro.props;
+const galleryId = `gallery-${Math.random().toString(36).substr(2, 9)}`;
+
+const columnClasses = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-3',
+  4: 'md:grid-cols-4',
+};
+---
+
+<div class="gallery-container my-8" data-gallery-id={galleryId}>
+  <div class={`grid grid-cols-1 ${columnClasses[columns] || 'md:grid-cols-3'} gap-4`}>
+    {images.map((image, index) => (
+      <button
+        type="button"
+        class="gallery-item group relative aspect-video overflow-hidden rounded-lg border border-[rgb(var(--color-border))] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-accent))]"
+        data-index={index}
+        aria-label={`View image: ${image.alt}`}
+      >
+        <img
+          src={image.src}
+          alt={image.alt}
+          loading="lazy"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        {image.caption && (
+          <div class="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+            {image.caption}
+          </div>
+        )}
+      </button>
+    ))}
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div
+    class="lightbox fixed inset-0 bg-black/95 z-50 hidden items-center justify-center p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image lightbox"
+  >
+    <button
+      class="lightbox-close absolute top-4 right-4 text-white hover:text-gray-300 p-2 z-10"
+      aria-label="Close lightbox"
+    >
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <button
+      class="lightbox-prev absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 p-2 disabled:opacity-30 disabled:cursor-not-allowed"
+      aria-label="Previous image"
+    >
+      <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+
+    <button
+      class="lightbox-next absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 p-2 disabled:opacity-30 disabled:cursor-not-allowed"
+      aria-label="Next image"
+    >
+      <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </button>
+
+    <div class="lightbox-content max-w-7xl max-h-[90vh] w-full relative">
+      <img
+        class="lightbox-image w-full h-full object-contain"
+        src=""
+        alt=""
+      />
+      <div class="lightbox-caption text-white text-center mt-4 text-lg"></div>
+      <div class="lightbox-counter text-white text-center mt-2 text-sm opacity-70"></div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ galleryId, images }}>
+  (function() {
+    const container = document.querySelector(`[data-gallery-id="${galleryId}"]`);
+    if (!container) return;
+
+    const lightbox = container.querySelector('.lightbox');
+    const lightboxImage = container.querySelector('.lightbox-image');
+    const lightboxCaption = container.querySelector('.lightbox-caption');
+    const lightboxCounter = container.querySelector('.lightbox-counter');
+    const closeBtn = container.querySelector('.lightbox-close');
+    const prevBtn = container.querySelector('.lightbox-prev');
+    const nextBtn = container.querySelector('.lightbox-next');
+    const galleryItems = container.querySelectorAll('.gallery-item');
+
+    let currentIndex = 0;
+
+    function showImage(index) {
+      currentIndex = index;
+      const image = images[index];
+
+      if (lightboxImage) lightboxImage.src = image.src;
+      if (lightboxImage) lightboxImage.alt = image.alt;
+      if (lightboxCaption) lightboxCaption.textContent = image.caption || '';
+      if (lightboxCounter) lightboxCounter.textContent = `${index + 1} / ${images.length}`;
+
+      if (prevBtn) prevBtn.disabled = index === 0;
+      if (nextBtn) nextBtn.disabled = index === images.length - 1;
+    }
+
+    function openLightbox(index) {
+      showImage(index);
+      if (lightbox) {
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeLightbox() {
+      if (lightbox) {
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function showPrev() {
+      if (currentIndex > 0) {
+        showImage(currentIndex - 1);
+      }
+    }
+
+    function showNext() {
+      if (currentIndex < images.length - 1) {
+        showImage(currentIndex + 1);
+      }
+    }
+
+    galleryItems.forEach((item, index) => {
+      item.addEventListener('click', () => openLightbox(index));
+    });
+
+    closeBtn?.addEventListener('click', closeLightbox);
+    prevBtn?.addEventListener('click', showPrev);
+    nextBtn?.addEventListener('click', showNext);
+
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox?.classList.contains('flex')) return;
+
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+    });
+  })();
+</script>

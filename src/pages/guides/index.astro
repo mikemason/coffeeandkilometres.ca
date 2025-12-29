@@ -1,0 +1,65 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('guides'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout
+  title="Travel Guides"
+  description="Comprehensive guides for overlanding routes, remote highways, and backcountry adventures across North America."
+>
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <header class="mb-12">
+      <h1 class="text-5xl font-bold mb-4">Travel Guides</h1>
+      <p class="text-xl text-[rgb(var(--color-text-muted))] max-w-3xl">
+        Detailed route guides with maps, practical info, and firsthand experience from the road.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {guides.map((guide) => (
+        <a
+          href={`/guides/${guide.slug}`}
+          class="group block border border-[rgb(var(--color-border))] rounded-lg overflow-hidden hover:border-[rgb(var(--color-accent))] transition-colors"
+        >
+          {guide.data.heroImage && (
+            <div class="aspect-video bg-[rgb(var(--color-border))] overflow-hidden">
+              <img
+                src={guide.data.heroImage}
+                alt={guide.data.heroImageAlt || guide.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          )}
+          <div class="p-6">
+            <div class="flex gap-2 mb-3 flex-wrap">
+              {guide.data.tags.slice(0, 3).map((tag: string) => (
+                <span class="text-xs px-2 py-1 rounded bg-[rgb(var(--color-border))] text-[rgb(var(--color-text-muted))]">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-[rgb(var(--color-accent))] transition-colors">
+              {guide.data.title}
+            </h2>
+            <p class="text-[rgb(var(--color-text-muted))] mb-4">
+              {guide.data.description}
+            </p>
+            <div class="flex gap-4 text-sm text-[rgb(var(--color-text-muted))]">
+              {guide.data.distance && <span>📍 {guide.data.distance}</span>}
+              {guide.data.duration && <span>⏱️ {guide.data.duration}</span>}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {guides.length === 0 && (
+      <div class="text-center py-12 text-[rgb(var(--color-text-muted))]">
+        <p>No guides published yet. Check back soon!</p>
+      </div>
+    )}
+  </div>
+</Layout>

@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({
+    params: { slug: guide.slug },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+const { Content } = await guide.render();
+
+const formattedDate = guide.data.pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title={guide.data.title}
+  description={guide.data.description}
+  image={guide.data.heroImage}
+  article={true}
+>
+  <article class="max-w-4xl mx-auto px-4 py-12">
+    <!-- Header -->
+    <header class="mb-12">
+      <div class="mb-4">
+        <a
+          href="/guides"
+          class="text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-accent))] transition-colors text-sm"
+        >
+          ← Back to Guides
+        </a>
+      </div>
+
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+        {guide.data.title}
+      </h1>
+
+      <p class="text-xl text-[rgb(var(--color-text-muted))] mb-6 leading-relaxed">
+        {guide.data.description}
+      </p>
+
+      <div class="flex flex-wrap gap-4 text-sm text-[rgb(var(--color-text-muted))] mb-6">
+        <time datetime={guide.data.pubDate.toISOString()}>
+          Published {formattedDate}
+        </time>
+        {guide.data.updatedDate && (
+          <time datetime={guide.data.updatedDate.toISOString()}>
+            Updated {guide.data.updatedDate.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+        )}
+        {guide.data.distance && <span>📍 {guide.data.distance}</span>}
+        {guide.data.duration && <span>⏱️ {guide.data.duration}</span>}
+      </div>
+
+      {guide.data.tags.length > 0 && (
+        <div class="flex gap-2 flex-wrap">
+          {guide.data.tags.map((tag: string) => (
+            <span class="text-xs px-3 py-1 rounded-full bg-[rgb(var(--color-border))] text-[rgb(var(--color-text-muted))]">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Hero Image -->
+    {guide.data.heroImage && (
+      <div class="mb-12 rounded-lg overflow-hidden">
+        <img
+          src={guide.data.heroImage}
+          alt={guide.data.heroImageAlt || guide.data.title}
+          class="w-full aspect-video object-cover"
+        />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none">
+      <Content />
+    </div>
+  </article>
+</Layout>

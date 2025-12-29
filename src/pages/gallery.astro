@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Gallery from '../components/Gallery.astro';
+
+// Example placeholder images - replace with actual images later
+const demoImages = [
+  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', alt: 'Mountain landscape' },
+  { src: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800', alt: 'Road trip' },
+  { src: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800', alt: 'Camping' },
+  { src: 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=800', alt: 'Wilderness' },
+  { src: 'https://images.unsplash.com/photo-1472791108553-c9405341e398?w=800', alt: 'Mountain road' },
+  { src: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800', alt: 'Sunset landscape' },
+];
+---
+
+<Layout
+  title="Gallery"
+  description="Photos from the road - landscapes, campsites, and moments from overlanding adventures."
+>
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <header class="mb-12">
+      <h1 class="text-5xl font-bold mb-4">Photo Gallery</h1>
+      <p class="text-xl text-[rgb(var(--color-text-muted))]">
+        Landscapes, campsites, and moments from the road.
+      </p>
+    </header>
+
+    <div class="mb-12">
+      <p class="text-[rgb(var(--color-text-muted))] mb-4">
+        This is a placeholder gallery with demo images. Replace these with your actual photos
+        by updating the gallery.astro file.
+      </p>
+      <Gallery images={demoImages} columns={3} />
+    </div>
+
+    <div class="border border-[rgb(var(--color-border))] rounded-lg p-8 bg-[rgb(var(--color-border))]/30">
+      <h2 class="text-2xl font-bold mb-4">How to Add Your Photos</h2>
+      <div class="prose max-w-none">
+        <ol>
+          <li>Add your images to the <code>public/images/</code> directory</li>
+          <li>Update the <code>src/pages/gallery.astro</code> file with your image paths</li>
+          <li>Organize photos by trip or location using multiple Gallery components</li>
+        </ol>
+        <p class="text-sm text-[rgb(var(--color-text-muted))] mt-4">
+          You can also create separate gallery pages for different trips or categories.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

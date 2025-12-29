@@ -1,0 +1,96 @@
+---
+import Header from '../components/Header.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+}
+
+const { title, description = 'A travel and overlanding resource covering routes, guides, and stories from the road.', image = '/og-image.jpg', article = false } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title} | Coffee & Kilometres</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <footer class="border-t border-[rgb(var(--color-border))] mt-20">
+      <div class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="font-bold mb-3">Coffee & Kilometres</h3>
+            <p class="text-[rgb(var(--color-text-muted))] text-sm">
+              Travel guides, stories, and resources for overlanders and adventurers.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold mb-3">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/guides" class="text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-accent))]">Guides</a></li>
+              <li><a href="/blog" class="text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-accent))]">Blog</a></li>
+              <li><a href="/gallery" class="text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-accent))]">Gallery</a></li>
+              <li><a href="/about" class="text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-accent))]">About</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-3">Resources</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/rss.xml" class="text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-accent))]">RSS Feed</a></li>
+              <li><a href="/privacy" class="text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-accent))]">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-[rgb(var(--color-border))] text-center text-sm text-[rgb(var(--color-text-muted))]">
+          <p>&copy; {new Date().getFullYear()} Coffee & Kilometres. Built with Astro.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

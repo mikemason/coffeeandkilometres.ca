@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout
+  title="From the Road"
+  description="Stories, observations, and experiences from overlanding adventures across North America."
+>
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <header class="mb-12">
+      <h1 class="text-5xl font-bold mb-4">From the Road</h1>
+      <p class="text-xl text-[rgb(var(--color-text-muted))]">
+        Stories and observations from the road.
+      </p>
+    </header>
+
+    <div class="space-y-8">
+      {posts.map((post) => (
+        <article class="border-b border-[rgb(var(--color-border))] pb-8 last:border-0">
+          <a href={`/blog/${post.slug}`} class="group block">
+            <div class="flex flex-col md:flex-row gap-6">
+              {post.data.heroImage && (
+                <div class="md:w-64 flex-shrink-0">
+                  <div class="aspect-video bg-[rgb(var(--color-border))] rounded-lg overflow-hidden">
+                    <img
+                      src={post.data.heroImage}
+                      alt={post.data.heroImageAlt || post.data.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                </div>
+              )}
+              <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-2 group-hover:text-[rgb(var(--color-accent))] transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="text-[rgb(var(--color-text-muted))] mb-4">
+                  {post.data.description}
+                </p>
+                <div class="flex flex-wrap gap-4 text-sm text-[rgb(var(--color-text-muted))]">
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </time>
+                  {post.data.location && <span>📍 {post.data.location}</span>}
+                </div>
+                {post.data.tags.length > 0 && (
+                  <div class="flex gap-2 mt-4 flex-wrap">
+                    {post.data.tags.slice(0, 5).map((tag: string) => (
+                      <span class="text-xs px-2 py-1 rounded bg-[rgb(var(--color-border))] text-[rgb(var(--color-text-muted))]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    {posts.length === 0 && (
+      <div class="text-center py-12 text-[rgb(var(--color-text-muted))]">
+        <p>No posts yet. Check back soon!</p>
+      </div>
+    )}
+  </div>
+</Layout>
