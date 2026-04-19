@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const sections = await getCollection('build');
+  return sections.map((section) => ({
+    params: { slug: section.slug },
+    props: { section },
+  }));
+}
+
+const { section } = Astro.props;
+const { Content } = await render(section);
+
+const allSections = (await getCollection('build')).sort((a, b) => a.data.order - b.data.order);
+const currentIndex = allSections.findIndex((s) => s.slug === section.slug);
+const prev = allSections[currentIndex - 1];
+const next = allSections[currentIndex + 1];
+---
+
+<Layout
+  title={section.data.title}
+  description={section.data.description}
+  article={true}
+>
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    <nav class="text-sm text-[rgb(var(--color-text-muted))] mb-8">
+      <a href="/van-build" class="hover:text-[rgb(var(--color-accent))] transition-colors">The Van Build</a>
+      <span class="mx-2">/</span>
+      <span>{section.data.title}</span>
+    </nav>
+
+    {section.data.heroImage && (
+      <div class="aspect-video rounded-lg overflow-hidden mb-8">
+        <img
+          src={section.data.heroImage}
+          alt={section.data.heroImageAlt || section.data.title}
+          class="w-full h-full object-cover"
+        />
+      </div>
+    )}
+
+    <header class="mb-10">
+      <p class="text-sm text-[rgb(var(--color-text-muted))] mb-2">Section {section.data.order} of {allSections.length}</p>
+      <h1 class="text-4xl font-bold">{section.data.title}</h1>
+    </header>
+
+    <div class="prose prose-lg max-w-none">
+      <Content />
+    </div>
+
+    <nav class="mt-16 pt-8 border-t border-[rgb(var(--color-border))] flex justify-between gap-4">
+      {prev ? (
+        <a href={`/van-build/${prev.slug}`} class="group flex flex-col text-sm hover:text-[rgb(var(--color-accent))] transition-colors">
+          <span class="text-[rgb(var(--color-text-muted))]">Previous</span>
+          <span class="font-medium">{prev.data.title}</span>
+        </a>
+      ) : (
+        <a href="/van-build" class="group flex flex-col text-sm hover:text-[rgb(var(--color-accent))] transition-colors">
+          <span class="text-[rgb(var(--color-text-muted))]">Back to</span>
+          <span class="font-medium">The Van Build</span>
+        </a>
+      )}
+      {next && (
+        <a href={`/van-build/${next.slug}`} class="group flex flex-col text-sm text-right hover:text-[rgb(var(--color-accent))] transition-colors">
+          <span class="text-[rgb(var(--color-text-muted))]">Next</span>
+          <span class="font-medium">{next.data.title}</span>
+        </a>
+      )}
+    </nav>
+  </div>
+</Layout>

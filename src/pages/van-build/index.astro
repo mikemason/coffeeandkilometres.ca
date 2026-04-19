@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const sections = (await getCollection('build'))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout
+  title="The Van Build"
+  description="A detailed look at how we built out our camper van for overlanding — from shell to electrical to the finishing touches."
+>
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <header class="mb-12">
+      <h1 class="text-5xl font-bold mb-4">Our Build</h1>
+      <p class="text-xl text-[rgb(var(--color-text-muted))] max-w-3xl">
+        This isn't a step-by-step guide — there are plenty of those online, and we'll link to the ones we actually used. This is more about our thinking: what we chose, what we'd do differently, and why it works for the way we travel.
+      </p>
+    </header>
+
+    <nav class="space-y-3">
+      {sections.map((section) => (
+        <a
+          href={`/van-build/${section.slug}`}
+          class="group flex items-start gap-4 p-5 border border-[rgb(var(--color-border))] rounded-lg hover:border-[rgb(var(--color-accent))] transition-colors"
+        >
+          <span class="text-2xl font-bold text-[rgb(var(--color-border))] group-hover:text-[rgb(var(--color-accent))] transition-colors tabular-nums">
+            {String(section.data.order).padStart(2, '0')}
+          </span>
+          <div>
+            <h2 class="text-xl font-bold mb-1 group-hover:text-[rgb(var(--color-accent))] transition-colors">
+              {section.data.title}
+            </h2>
+            <p class="text-[rgb(var(--color-text-muted))] text-sm">{section.data.description}</p>
+          </div>
+        </a>
+      ))}
+    </nav>
+  </div>
+</Layout>

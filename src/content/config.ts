@@ -35,4 +35,16 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { guides, blog };
+const build = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    order: z.number(),
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+    updatedDate: z.coerce.date().optional(),
+  }),
+});
+
+export const collections = { guides, blog, build };
