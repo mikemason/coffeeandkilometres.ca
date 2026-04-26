@@ -4,6 +4,47 @@ description: "Solar and batteries are intimidating until they're not — how we 
 order: 4
 ---
 
-## Electrical System
+## Planning and sizing
 
-*Coming soon — electrical system details.*
+Electrical is the thing that scares people most, but from my perspective it was one of the things I had the most confidence in. We're not electricians — we just did a lot of research and built carefully. [FarOutRide's electrical guide](https://faroutride.com/electrical-system/) is the best place to start; they also sell an interactive PDF for system planning and wire sizing that's worth the money.
+
+The part you can't undo is the overall sizing of the system. Once the walls are closed, adding capacity is a real hassle. Figure out the electrical loads you need to run, then build for that number. It's important that you balance the whole system including battery capacity, charging sources and inverter wattage. 
+
+For us, the non-negotiable was induction cooking. We didn't want propane in the van, so we knew we needed a certain amount of 'oomph' in the electrical system.
+
+## Our setup
+
+300 amp hours of battery at 12 volts, which total 3.6 kWh. Two 100W solar panels on the roof. Alternator charging through the Transit's "customer connection point,""
+which Ford built specifically for upfitter conversions; it can deliver up to 150 amps at 12 volts. We run a 60A DC-to-DC charger off it which gives us around 750 watts of charging whenever the engine's on. We have a 2000W inverter that takes battery power and turns it into 120v like you'd find at home.
+
+We drive every day, so the alternator is doing most of the charging. The solar is more of a bonus than a strategy — fine when we're parked somewhere sunny, not something we rely on.
+
+In real use: if we start at full charge and boil a kettle and cook breakfast on the induction cooktop, we'll have spent about 15% of the battery bank. We can run the fridge, diesel heater, charge our laptops, and most of the time we're not worrying about having enough battery. The thing that would break this system is air conditioning — 3.6 kWh is not *really* enough to run AC overnight. Our AC system is an [Ecoflow Wave 3](https://ca.ecoflow.com/collections/ecoflow-wave-3/products/ecoflow-wave-3-portable-air-conditioner-with-heater?variant=52405151662451) which has its own battery bank and is just about enough to run overnight, but overall AC on our van is not optimal.
+
+## The approach question
+
+There are three main ways to build an electrical system.
+
+All-in-one power stations — Bluetti, Jackery, Goal Zero, EcoFlow. A box with a battery inside, you plug things in. EcoFlow in particular has built out their plug-and-play ecosystem enough that you can get alternator charging working without much custom wiring. Reasonable option, especially for a first build.
+
+Fully custom component systems — buy a battery, solar charge controller, inverter/charger, DC-to-DC charger, wire it all yourself. This is the wiring diagram route, it's very flexible, and usually decently space-efficient since you can lay it out (mostly) how you like.
+
+[EcoFlow Power Kits](https://www.ecoflow.com/ca/ecoflow-power-kits/series) — two large boxes that handle most of what a custom system does, already integrated, expandable if you add capacity later. FarOutRide built a custom system for their first van but switched to the Ecoflow kit for their second build, and we're seeing more and more builders offering these kits.
+
+## Wiring it yourself
+
+We used Renogy throughout, which is probably the most cost-effective option without going fully "no-name Amazon." The hardware works, we've had no failures, but the monitoring app is genuinely bad. Victron's equivalent is much better, and if we were doing custom again with a bit more budget we'd probably go Victron. But the Renogy components themselves have been fine.
+
+What caught us off guard was how much the supporting stuff costs. Batteries and main components are the obvious budget items. The marine-grade wire, fuses, breakers, bus bars, and connectors came to almost as much — maybe not quite, but close enough to be a shock. The van is in constant vibration, so you're using wire rated for it, terminated properly, protected at every connection point. Online calculators such as [Blue Sea](http://circuitwizard.bluesea.com/)'s help you determine wire sizing; the fusing you just have to do everywhere, because if something goes wrong you want the fuse to blow before anything inside a wall does.
+
+Crimping and connecting wires is much less scary than you might think. If something feels 'off' or flaky it probably is; being careful and using common sense is enough. It's worth using heat-shrink to help robustify connection points, too.
+
+## What we'd do on van 2
+
+Probably an EcoFlow Power Kit. The expandability is useful, you could install a 5kWh system and then use the van, leaving room to add a battery later for more capacity without redoing the whole system. The other advantage is that these kits are quite compact and you get to skip a whole bunch of fiddly wiring. The downside is that a failure could mean replacing a larger unit rather than one swappable component.
+
+And if van 2 has air conditioning, everything gets sized up from there. 3.6 kWh is right for induction cooking without climate control. For a van with built-in aircon you probably want 5kWh at an absolute minimum, with 8 or 10kWh being much better.
+
+Further reading:
+
+[https://faroutride.com/ecoflow-vs-victron/](https://faroutride.com/ecoflow-vs-victron/)
