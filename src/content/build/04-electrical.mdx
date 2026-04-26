@@ -4,6 +4,42 @@ description: "Solar and batteries are intimidating until they're not — how we 
 order: 4
 ---
 
-## Electrical System
+## Planning and sizing
 
-*Coming soon — electrical system details.*
+Electrical is the thing that scares people most. It doesn't need to. We're not electricians — we just did a lot of research and built carefully. [FarOutRide's electrical guide](https://faroutride.com/electrical-system/) is the best place to start; they also sell an interactive PDF for system planning and wire sizing that's worth the money.
+
+The part you can't undo: sizing. Once the walls are closed, adding capacity is a real hassle. Figure out what you actually need to run, then build for that number, not a rough approximation of it.
+
+For us, the non-negotiable was induction cooking. No propane. That one decision drove everything else.
+
+## Our setup
+
+300 amp hours at 12 volts — 3.6 kWh of battery. Two 100W solar panels on the roof. And alternator charging through the Transit's upfitter connection point, which Ford built specifically for camper conversions; it can deliver up to 150 amps at 12 volts. We run a 60A DC-to-DC charger off it, around 750 watts, whenever the engine's on.
+
+We drive every day, so the alternator is doing most of the work. The solar is more of a bonus than a strategy — fine when we're parked somewhere sunny, not something we rely on.
+
+In real use: start at full charge, boil a kettle, cook breakfast on the induction cooktop, and we've spent about 15% of the bank. It works. The thing that would break this system is air conditioning — 3.6 kWh is not an AC budget. We don't have AC. That was a deliberate call.
+
+## The approach question
+
+Three ways to do this.
+
+All-in-one power stations — Bluetti, Jackery, Goal Zero, EcoFlow. A box with a battery inside, you plug things in. EcoFlow in particular has built out their plug-and-play ecosystem enough that you can get alternator charging working without much custom wiring. Reasonable option, especially for a first build.
+
+Fully custom component systems — buy a battery, solar charge controller, inverter/charger, DC-to-DC charger, wire it all yourself. This is the wiring diagram route. It's what we did.
+
+[EcoFlow Power Kits](https://www.ecoflow.com/ca/ecoflow-power-kits/series) — two large boxes that handle most of what a custom system does, already integrated, expandable if you add capacity later. FarOutRide built fully custom systems for years before switching to these, which is the kind of endorsement that matters.
+
+## Wiring it yourself
+
+We used Renogy. The hardware works; we've had no failures. The monitoring app is genuinely bad — Victron's equivalent is much better, and if we were doing custom again with a bit more budget we'd probably go Victron. But the Renogy components themselves have been fine.
+
+What caught us off guard was how much the supporting stuff costs. Batteries and main components are the obvious budget items. The marine-grade wire, fuses, breakers, bus bars, and connectors came to almost as much — maybe not quite, but close enough to be a shock. The van is in constant vibration, so you're using wire rated for it, terminated properly, protected at every connection point. Online calculators handle the wire sizing; the fusing you just have to do everywhere, because if something goes wrong you want the fuse to blow before anything inside a wall does.
+
+Crimping turns out to be satisfying in a way that's hard to explain. You get into a rhythm with it.
+
+## What we'd do on van 2
+
+Probably EcoFlow Power Kits. The expandability is the main thing — build for now, add a battery later if you add AC, without redoing the whole system. The downside is that a failure could mean replacing a larger unit rather than one swappable component. We'd still take that trade.
+
+And if van 2 has air conditioning, everything gets sized up from there. 3.6 kWh is right for induction cooking without climate control. It's not right for much more than that.
