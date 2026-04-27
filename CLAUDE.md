@@ -34,7 +34,33 @@ Each collection has a dynamic slug page (`src/pages/[collection]/[...slug].astro
 
 **Styles** use Tailwind CSS 4 (Vite plugin, not PostCSS). CSS custom properties for color tokens live in `src/styles/global.css`.
 
-**Static assets**: images in `public/images/`, GPX tracks in `public/gpx/`.
+**Static assets**: images in `public/images/`, GPX tracks in `public/gpx/`. Van build images live in `public/images/van-build/`.
+
+## Image workflow
+
+**Naming convention**: `name-original.jpg` for the raw file, `name-800.jpg` / `name-1920.jpg` for web-ready versions (number = width in px).
+
+**Sizes to produce**:
+- Full-width hero images: 1920px wide
+- Float/inline content images: 800px wide (600px for portrait)
+- The build index hero: 800px wide
+
+**Resize with sharp** (already a dev dependency):
+```js
+node -e "import('sharp').then(async ({ default: sharp }) => {
+  await sharp('public/images/van-build/name-original.jpg')
+    .resize(800, null, { withoutEnlargement: true, fit: 'inside' })
+    .jpeg({ quality: 85, mozjpeg: true })
+    .toFile('public/images/van-build/name-800.jpg');
+});"
+```
+
+**Float-right images in MDX** — use this pattern (adjust width class for portrait: `w-1/3`):
+```mdx
+<img src="/images/van-build/name-800.jpg" alt="..." class="float-right ml-6 mb-4 w-1/2 rounded-lg" />
+```
+
+Only commit the web-ready (`-800`, `-1920`) files, not the originals.
 
 ## Writing voice
 
