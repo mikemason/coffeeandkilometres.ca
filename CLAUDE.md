@@ -23,7 +23,7 @@ Astro 5 static site with Tailwind CSS 4, MDX content, and TypeScript. Hosted on 
 
 Each collection has a dynamic slug page (`src/pages/[collection]/[...slug].astro`) and an index page.
 
-**Van build** (`/van-build`) uses the `build` collection ordered by the `order` frontmatter field. Content files are `01-overview.mdx` through `08-exterior.mdx`; 04–08 are stubs pending content.
+**Van build** (`/van-build`) uses the `build` collection ordered by the `order` frontmatter field. Content files are `01-overview.mdx` through `08-exterior.mdx`.
 
 **Components** are in `src/components/`:
 - `Map.astro` — Leaflet + OpenStreetMap, accepts `gpxFile` prop (path under `public/gpx/`)
@@ -38,7 +38,7 @@ Each collection has a dynamic slug page (`src/pages/[collection]/[...slug].astro
 
 ## Image workflow
 
-**Naming convention**: `name-original.jpg` for the raw file, `name-800.jpg` / `name-1920.jpg` for web-ready versions (number = width in px).
+**Naming convention**: `name.jpg` for the raw/original file (left untracked), `name-800.jpg` / `name-1920.jpg` for web-ready versions (number = width in px).
 
 **Sizes to produce**:
 - Full-width hero images: 1920px wide
@@ -58,6 +58,11 @@ node -e "import('sharp').then(async ({ default: sharp }) => {
 **Float-right images in MDX** — use this pattern (adjust width class for portrait: `w-1/3`):
 ```mdx
 <img src="/images/van-build/name-800.jpg" alt="..." class="float-right ml-6 mb-4 w-1/2 rounded-lg" />
+```
+
+**Clearing floats** — if a section has multiple images that overflow into the next section, add a clearfix before the next heading:
+```mdx
+<div class="clear-both" />
 ```
 
 Only commit the web-ready (`-800`, `-1920`) files, not the originals.
