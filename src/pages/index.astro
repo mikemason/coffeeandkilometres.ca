@@ -23,48 +23,77 @@ const recentBlog = (await getCollection('blog'))
   </section>
 
   <!-- Featured Guides -->
-  {featuredGuides.length > 0 && (
-    <section class="max-w-6xl mx-auto px-4 py-12">
-      <h2 class="text-3xl font-bold mb-8">Featured Guides</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {featuredGuides.map((guide) => (
-          <a
-            href={`/guides/${guide.slug}`}
-            class="group block border border-[rgb(var(--color-border))] rounded-lg overflow-hidden hover:border-[rgb(var(--color-accent))] transition-colors"
-          >
-            {guide.data.heroImage && (
-              <div class="aspect-video bg-[rgb(var(--color-border))] overflow-hidden">
-                <img
-                  src={guide.data.heroImage}
-                  alt={guide.data.heroImageAlt || guide.data.title}
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-8">Featured</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {featuredGuides.map((guide) => (
+        <a
+          href={`/guides/${guide.slug}`}
+          class="group block border border-[rgb(var(--color-border))] rounded-lg overflow-hidden hover:border-[rgb(var(--color-accent))] transition-colors"
+        >
+          {guide.data.heroImage && (
+            <div class="aspect-video bg-[rgb(var(--color-border))] overflow-hidden">
+              <img
+                src={guide.data.heroImage}
+                alt={guide.data.heroImageAlt || guide.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          )}
+          <div class="p-6">
+            <div class="flex gap-2 mb-3 flex-wrap">
+              {guide.data.tags.slice(0, 3).map((tag: string) => (
+                <span class="text-xs px-2 py-1 rounded bg-[rgb(var(--color-border))] text-[rgb(var(--color-text-muted))]">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h3 class="text-2xl font-bold mb-2 group-hover:text-[rgb(var(--color-accent))] transition-colors">
+              {guide.data.title}
+            </h3>
+            <p class="text-[rgb(var(--color-text-muted))] mb-4">
+              {guide.data.description}
+            </p>
+            {(guide.data.distance || guide.data.duration) && (
+              <div class="flex gap-4 text-sm text-[rgb(var(--color-text-muted))]">
+                {guide.data.distance && <span>📍 {guide.data.distance}</span>}
+                {guide.data.duration && <span>⏱️ {guide.data.duration}</span>}
               </div>
             )}
-            <div class="p-6">
-              <div class="flex gap-2 mb-3 flex-wrap">
-                {guide.data.tags.slice(0, 3).map((tag: string) => (
-                  <span class="text-xs px-2 py-1 rounded bg-[rgb(var(--color-border))] text-[rgb(var(--color-text-muted))]">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <h3 class="text-2xl font-bold mb-2 group-hover:text-[rgb(var(--color-accent))] transition-colors">
-                {guide.data.title}
-              </h3>
-              <p class="text-[rgb(var(--color-text-muted))] mb-4">
-                {guide.data.description}
-              </p>
-              {(guide.data.distance || guide.data.duration) && (
-                <div class="flex gap-4 text-sm text-[rgb(var(--color-text-muted))]">
-                  {guide.data.distance && <span>📍 {guide.data.distance}</span>}
-                  {guide.data.duration && <span>⏱️ {guide.data.duration}</span>}
-                </div>
-              )}
-            </div>
-          </a>
-        ))}
-      </div>
+          </div>
+        </a>
+      ))}
+
+      <!-- Our Build card -->
+      <a
+        href="/van-build"
+        class="group block border border-[rgb(var(--color-border))] rounded-lg overflow-hidden hover:border-[rgb(var(--color-accent))] transition-colors"
+      >
+        <div class="aspect-video bg-[rgb(var(--color-border))] overflow-hidden">
+          <img
+            src="/images/van-build/build-bed-wide-800.jpg"
+            alt="The interior of our converted Ford Transit camper van"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <div class="p-6">
+          <div class="flex gap-2 mb-3 flex-wrap">
+            <span class="text-xs px-2 py-1 rounded bg-[rgb(var(--color-border))] text-[rgb(var(--color-text-muted))]">van build</span>
+            <span class="text-xs px-2 py-1 rounded bg-[rgb(var(--color-border))] text-[rgb(var(--color-text-muted))]">overlanding</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-2 group-hover:text-[rgb(var(--color-accent))] transition-colors">
+            Our Build
+          </h3>
+          <p class="text-[rgb(var(--color-text-muted))] mb-4">
+            A detailed look at our 2021 Ford Transit conversion — layout decisions, electrical, insulation, kitchen, and everything in between.
+          </p>
+          <div class="flex gap-4 text-sm text-[rgb(var(--color-text-muted))]">
+            <span>🚐 2021 Ford Transit AWD</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    {featuredGuides.length > 0 && (
       <div class="text-center mt-8">
         <a
           href="/guides"
@@ -73,8 +102,8 @@ const recentBlog = (await getCollection('blog'))
           View All Guides
         </a>
       </div>
-    </section>
-  )}
+    )}
+  </section>
 
   <!-- Recent Blog Posts -->
   {recentBlog.length > 0 && (
