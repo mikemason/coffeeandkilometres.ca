@@ -6,9 +6,6 @@ const featuredGuides = (await getCollection('guides'))
   .filter(guide => guide.data.featured)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const recentBlog = (await getCollection('blog'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
 ---
 
 <Layout title="Home" description="Travel guides and stories from the road. Plan your next overlanding adventure with detailed route guides, camping info, and real experiences from remote highways.">
@@ -105,51 +102,18 @@ const recentBlog = (await getCollection('blog'))
     )}
   </section>
 
-  <!-- Recent Blog Posts -->
-  {recentBlog.length > 0 && (
-    <section class="max-w-6xl mx-auto px-4 py-12">
-      <h2 class="text-3xl font-bold mb-8">From the Road</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {recentBlog.map((post) => (
-          <a
-            href={`/blog/${post.slug}`}
-            class="group block border border-[rgb(var(--color-border))] rounded-lg overflow-hidden hover:border-[rgb(var(--color-accent))] transition-colors"
-          >
-            {post.data.heroImage && (
-              <div class="aspect-video bg-[rgb(var(--color-border))] overflow-hidden">
-                <img
-                  src={post.data.heroImage}
-                  alt={post.data.heroImageAlt || post.data.title}
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            )}
-            <div class="p-4">
-              <h3 class="font-bold mb-2 group-hover:text-[rgb(var(--color-accent))] transition-colors">
-                {post.data.title}
-              </h3>
-              <p class="text-sm text-[rgb(var(--color-text-muted))] mb-2">
-                {post.data.description}
-              </p>
-              <time class="text-xs text-[rgb(var(--color-text-muted))]">
-                {post.data.pubDate.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </time>
-            </div>
-          </a>
-        ))}
-      </div>
-      <div class="text-center mt-8">
-        <a
-          href="/blog"
-          class="inline-block px-6 py-3 border border-[rgb(var(--color-border))] rounded-lg hover:border-[rgb(var(--color-accent))] hover:text-[rgb(var(--color-accent))] transition-colors"
-        >
-          Read More Stories
-        </a>
-      </div>
-    </section>
-  )}
+  <!-- Instagram Feed -->
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-2">From the Road</h2>
+    <p class="text-[rgb(var(--color-text-muted))] mb-8">
+      Follow along on <a href="https://www.instagram.com/sleeperservicevan" target="_blank" rel="noopener noreferrer" class="hover:text-[rgb(var(--color-accent))] transition-colors">@sleeperservicevan</a>
+    </p>
+    <behold-widget feed-id="KvPclw6zpp27KbPatXvy"></behold-widget>
+    <script>
+      (() => {
+        const d=document,s=d.createElement("script");s.type="module";
+        s.src="https://w.behold.so/widget.js";d.head.append(s);
+      })();
+    </script>
+  </section>
 </Layout>
