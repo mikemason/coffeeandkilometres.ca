@@ -78,4 +78,20 @@
   .prose pre code {
     @apply p-0 bg-transparent;
   }
+
+  .prose table {
+    @apply w-full mb-6 text-sm border-collapse;
+  }
+
+  .prose thead th {
+    @apply text-left px-4 py-2 border-b-2 border-[rgb(var(--color-border))] font-semibold text-[rgb(var(--color-text-muted))];
+  }
+
+  .prose tbody td {
+    @apply px-4 py-2 border-b border-[rgb(var(--color-border))];
+  }
+
+  .prose tbody tr:last-child td {
+    @apply border-b-0;
+  }
 }
